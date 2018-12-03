@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
-public class BlockchainCommander{
+public class EthCommander{
 
     public String sendTransaction(String[] args) throws Exception{
 		String [] nodecom = null;
@@ -52,8 +52,10 @@ public class BlockchainCommander{
 
 		return null;
 	}
+	/*
     public static void main(String[] args) throws Exception {
-		BlockchainCommander bc = new BlockchainCommander();
+		EthCommander bc = new EthCommander();
 		System.out.println("txId="+bc.sendTransaction(args));
-	}		
+	}
+	*/		
 }
