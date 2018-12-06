@@ -76,7 +76,8 @@ public class EosApiServiceImpl implements EosApiService {
 	}
 	
 	private EosApiRestClient prepareEOSApi(String wallet, String password, String account) {
-		_eosApiRestClient = EosApiClientFactory.newInstance("http://127.0.0.1:8899", "http://127.0.0.1:8888", "http://127.0.0.1:8888").newRestClient();
+		//_eosApiRestClient = EosApiClientFactory.newInstance("http://127.0.0.1:8899", "http://127.0.0.1:8888", "http://127.0.0.1:8888").newRestClient();
+		_eosApiRestClient = EosApiClientFactory.newInstance("http://127.0.0.1:8899", "http://api.kylin.alohaeos.com", "http://api.kylin.alohaeos.com").newRestClient();
 		_eosApiRestClient.openWallet(wallet);
 		_eosApiRestClient.unlockWallet(wallet, password);
 		
@@ -85,7 +86,7 @@ public class EosApiServiceImpl implements EosApiService {
 	
 	private String getTable(String column) {
 		 EosApiRestClient eosApiRestClient = _eosApiRestClient;
-	     TableRow tr = eosApiRestClient.getTableRows("prorata", "prorata", "artinfo");
+	     TableRow tr = eosApiRestClient.getTableRows(_account, _account, "artinfo");
 	     
 	     List<Map<String, ?>> list;
 	     list = tr.getRows();
@@ -114,8 +115,10 @@ public class EosApiServiceImpl implements EosApiService {
         AbiJsonToBin data = eosApiRestClient.abiJsonToBin(_account, func, args);
 
         /* Get the head block */
-        Block block = eosApiRestClient.getBlock(eosApiRestClient.getChainInfo().getHeadBlockId());
+        ChainInfo chainInfo = eosApiRestClient.getChainInfo();
+        Block block = eosApiRestClient.getBlock(chainInfo.getHeadBlockId());
         String ts = block.getTimeStamp();
+        String chain_id = chainInfo.getChainId();
 
         /* Create Transaction Action Authorization */
         TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
@@ -145,7 +148,7 @@ public class EosApiServiceImpl implements EosApiService {
         SignedPackedTransaction signedPackedTransaction 
         = eosApiRestClient.signTransaction(packedTransaction, 
         								Collections.singletonList(_account_address), 
-        								"cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f");
+        								chain_id);
         /* Push the transaction */
         PushedTransaction pushedTransaction = eosApiRestClient.pushTransaction("none", signedPackedTransaction);  
     	
