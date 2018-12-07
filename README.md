@@ -1,10 +1,13 @@
-### bapi
+# bapi
+
 ## blockchain api client
+provide the blockchain api through java.
 
+1. support the ethereum api through java
+2. support the eos api through java
+ 
 
-
-
-'''
+```
     BlockchainApi bApi = new BlockchainApiService(Blockchain.EOS);
     String wallet = "default";
     String wallet_password = "PW5KhdSnrn1ubnUqg3xUNJ7NzjWNcaaM31Qdr2MgAmwrpj7rdLsoV";
@@ -26,4 +29,11 @@
     System.out.println(bApi.getETHArtHash());
     System.out.println(bApi.getETHHoldersHash());
     System.out.println(bApi.getETHTransactionsHash());
-'''              	
+```
+
+        	
+## references
+1. https://github.com/EOSEssentials/eos-java-rpc-wrapper 
+   refer to the basic structure
+2. EOS commander for developer (https://github.com/playerone-id/EosCommander)
+   function that packed the transaction
