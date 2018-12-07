@@ -2,7 +2,7 @@ package com.bsquarelab.bapi;
 
 public interface BlockchainApi {
 	boolean connectEOS(String wallet, String password, String account, String address);
-	boolean connectEthereum();
+	boolean connectEthereum(String commander, String location);
 	
 	String setETHArtHash(String conAddr, String info);
 	String setETHHoldersHash (String conAddr, String holders);

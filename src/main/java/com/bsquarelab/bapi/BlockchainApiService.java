@@ -26,8 +26,8 @@ public class BlockchainApiService implements BlockchainApi {
     	return true;
     }
     
-    public boolean connectEthereum() {
-    	_ethApi = new EthCommander();
+    public boolean connectEthereum(String nodejs, String nodeFile) {
+    	_ethApi = new EthCommander(nodejs, nodeFile);
     	return true;
     }
 
