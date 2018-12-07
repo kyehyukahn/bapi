@@ -31,11 +31,28 @@ public class BlockchainApiService implements BlockchainApi {
     	return true;
     }
 
-	public String setETHArtHash(String info) {
+	public String setETHArtHash(String conAddr, String artinfo) {
 		if(_ethApi == null) return "";
         ArrayList<String> args = new ArrayList<String>();
-        args.add("setartinfo");
-        args.add("user03");
+        args.add(conAddr); 
+        args.add("setartinfo");          
+        args.add(artinfo);
+        String txID = "";
+        try {
+        	txID = _ethApi.sendTransaction(args.toArray(new String[0]));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return txID;
+	}
+	
+	public String setETHHoldersHash (String conAddr, String owners) {
+		if(_ethApi == null) return "";
+        ArrayList<String> args = new ArrayList<String>();
+        args.add(conAddr);  
+        args.add("setownerinfo");         
+        args.add(owners);
         String txID = "";  
         try {
         	txID = _ethApi.sendTransaction(args.toArray(new String[0]));
@@ -46,11 +63,12 @@ public class BlockchainApiService implements BlockchainApi {
 		return txID;
 	}
 	
-	public String setETHHoldersHash (String holders) {
+	public String addETHTransactionsHash(String conAddr, String txs) {
 		if(_ethApi == null) return "";
         ArrayList<String> args = new ArrayList<String>();
-        args.add("setownerinfo");
-        args.add("txs03");
+        args.add(conAddr); 
+        args.add("settxhash");          
+        args.add(txs);
         String txID = "";  
         try {
         	txID = _ethApi.sendTransaction(args.toArray(new String[0]));
@@ -61,37 +79,22 @@ public class BlockchainApiService implements BlockchainApi {
 		return txID;
 	}
 	
-	public String addETHTransactionsHash(String Txs) {
+	public String getETHArtHash(String conAddr) throws Exception {
 		if(_ethApi == null) return "";
-        ArrayList<String> args = new ArrayList<String>();
-        args.add("settxhash");
-        args.add("hash03");
-        String txID = "";  
-        try {
-        	txID = _ethApi.sendTransaction(args.toArray(new String[0]));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		return txID;
-	}
-	
-	public String getETHArtHash() throws Exception {
-		if(_ethApi == null) return "";
-        String[] getartinfo = {"getartinfo"};
+        String[] getartinfo = {conAddr,"getartinfo"};
         return _ethApi.sendTransaction(getartinfo);
 
 	}
 	
-	public String getETHHoldersHash() throws Exception {
+	public String getETHHoldersHash(String conAddr) throws Exception {
 		if(_ethApi == null) return "";
-        String[] getownerinfo = {"getownerinfo"};
+        String[] getownerinfo = {conAddr,"getownerinfo"};
         return _ethApi.sendTransaction(getownerinfo);
 	}
 	
-	public String getETHTransactionsHash() throws Exception{
+	public String getETHTransactionsHash(String conAddr) throws Exception{
 		if(_ethApi == null) return "";
-        String[] getsumtx = {"getsumtx"};
+        String[] getsumtx = {conAddr,"getsumtx"};
         return _ethApi.sendTransaction(getsumtx);
 	}
 	

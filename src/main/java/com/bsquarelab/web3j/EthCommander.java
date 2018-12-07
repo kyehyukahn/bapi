@@ -22,22 +22,23 @@ public class EthCommander{
     public String sendTransaction(String[] args) throws Exception{
 		String [] nodecom = null;
 		String result = null;
-		if(args != null && args.length == 1){
-			nodecom = new String[]{"node","artchain",args[0]};
+		if(args != null && args.length == 2){
+//			System.out.println(args[0]+" "+args[1]);
+			
+			nodecom = new String[]{"/usr/local/bin/node","/Users/techny/Development/ArtProject/artchain",args[0],args[1]};
 			result = makeTransaction(nodecom);
-		}else if (args != null && args.length == 2){
-			nodecom = new String[]{"node","artchain",args[0], args[1]};
+		}else if (args != null && args.length == 3){
+//			System.out.println(args[0]+" "+args[1]+" "+args[2]);
+			nodecom = new String[]{"/usr/local/bin/node","/Users/techny/Development/ArtProject/artchain",args[0], args[1], args[2]};
 			result = makeTransaction(nodecom);			
 		}
 		return result;
 	}
 
 	private String makeTransaction(String[] command) throws Exception {
-
-//		for(int a=0;a<command.length;a++){
-//			System.out.println("BlockchainCommander["+a+"]="+command[a]);
-//		}
-
+//		for(int a = 0 ;a < command.length; a++)
+//			System.out.println(command[a]);
+		
 		Process process = Runtime.getRuntime().exec(command);
 		InputStream is = process.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
@@ -46,16 +47,10 @@ public class EthCommander{
 
 		while ((line = br.readLine()) != null) {
 //			System.out.println(line);
-			TimeUnit.SECONDS.sleep(1);
+//			TimeUnit.SECONDS.sleep(1);
 			return line;
 		}
 
 		return null;
 	}
-	/*
-    public static void main(String[] args) throws Exception {
-		EthCommander bc = new EthCommander();
-		System.out.println("txId="+bc.sendTransaction(args));
-	}
-	*/		
 }
